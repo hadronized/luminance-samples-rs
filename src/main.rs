@@ -4,7 +4,7 @@ extern crate gl;
 extern crate glfw;
 
 use glfw::{Action, Context, Key};
-use luminance::{FragmentShader, Mode, VertexShader, Vertex};
+use luminance::{FragmentShader, Mode, VertexShader};
 use luminance_gl::gl33::{Framebuffer, Pipeline, Program, RenderCommand, ShadingCommand, Stage,
                          Tessellation};
 use std::os::raw::c_void;
@@ -37,9 +37,6 @@ fn main() {
     RenderCommand::new(None, true, |_|{}, &triangle, 1, None)
   ]);
   let pipeline = Pipeline::new(&back_buffer, [0., 0., 0., 1.], vec![&shading_cmd]);
-
-  let vf = <([f32; 2], [f32; 3]) as Vertex>::vertex_format();
-  println!("{:?}", vf);
 
   'app_loop: while !window.should_close() {
     glfw.poll_events();
