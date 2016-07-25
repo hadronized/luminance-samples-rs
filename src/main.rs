@@ -111,7 +111,7 @@ fn main() {
     }
 
     // Run our pipeline. Here, our pipeline is static. That means it’s created once (before the
-    // loop) and keep around until the program dies. Keep in mind that shading commands, render
+    // loop) and keept around until the program dies. Keep in mind that shading commands, render
     // commands and pipelines can be cretaed on the fly, for each frame. So you can have dynamic
     // pipelines if you want to. However, for the sake of this sample, such a configuration is not
     // required. Keep it simple and stupid. That’s the most important thing in life.
