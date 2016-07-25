@@ -5,8 +5,8 @@ extern crate glfw; // window stuff
 
 use glfw::{Action, Context, Key};
 // Currently, anything that doesn’t require backend or several implementation (i.e. which can be
-// shared between backends) is found in the luminance crate. In our case, we need the vertex stage
-// types and the tessellation mode.
+// shared between backends) is found in the luminance crate. In our case, we need the stage types
+// and the tessellation mode.
 use luminance::{FragmentShader, Mode, VertexShader};
 // We use the OpenGL 3.3 backend as it’s the only one available currently. All the types we’re using
 // from this crate are also defined in the luminance crate. However, keep in mind that luminance’s
