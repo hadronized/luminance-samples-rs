@@ -119,7 +119,7 @@ fn main() {
 
     // Swap the back buffer with the front buffer, making your render appear on screen.
     window.swap_buffers();
-    // This is a bit brutal. We a good and correct production application, you’d compute the time it
+    // This is a bit brutal. In a good and correct production application, you’d compute the time it
     // took to go through an iteration of the loop and sleep until the required amount of time to
     // meet the whished FPS. Some people don’t actually sleep and let the while goes crazy and rely
     // on the fact your graphic driver will block screen updates if you try to render too quickly.
