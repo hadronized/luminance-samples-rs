@@ -38,13 +38,14 @@ fn main() {
   ]);
   let pipeline = Pipeline::new(&back_buffer, [0., 0., 0., 1.], vec![&shading_cmd]);
 
-  'app_loop: while !window.should_close() {
+  // Let’s just loop until the window closes.
+  while !window.should_close() {
     glfw.poll_events();
 
     for (_, event) in glfw::flush_messages(&events) {
       match event {
         glfw::WindowEvent::Key(key, _, action, _) if key == Key::Escape && action == Action::Release => {
-          break 'app_loop;
+          window.set_should_close(true);
         },
         _ => {}
       }
