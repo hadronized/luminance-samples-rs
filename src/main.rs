@@ -5,9 +5,9 @@ extern crate glfw; // window stuff
 
 use glfw::{Action, Context, Key};
 // Currently, anything that doesn’t require backend or several implementation (i.e. which can be
-// shared between backends) is found in the luminance crate. In our case, we need the stage types
-// and the tessellation mode.
-use luminance::{FragmentShader, Mode, VertexShader};
+// shared between backends) is found in the luminance crate. In our case, we need only need the
+// tessellation mode.
+use luminance::Mode;
 // We use the OpenGL 3.3 backend as it’s the only one available currently. All the types we’re using
 // from this crate are also defined in the luminance crate. However, keep in mind that luminance’s
 // types are a bit more generic – as they accept an extra template argument for the backend type.
@@ -46,14 +46,14 @@ fn main() {
   // A vertex shader is a piece of code that runs on the GPU for each vertex you stream to.
   //
   // It is required to have a vertex shader to build a shader program.
-  let vs = Stage::<VertexShader>::new(VS_SRC).unwrap();
+  let vs = Stage::new(VS_SRC).unwrap();
   // A fragment shader is a piece of code that runs on the GPU for each covered pixel after
   // rasterization. When you render tessellation, it always covers a part of the screen (the
   // whole, a part of it or nothing). For each pixel covered by that tessellation (if any), the
   // fragment shader is executed and pixel data are flowing into it.
   //
   // It is required to have a fragment shader to build a shader program.
-  let fs = Stage::<FragmentShader>::new(FS_SRC).unwrap();
+  let fs = Stage::new(FS_SRC).unwrap();
   // A shader program represents all stages used to transform and rasterize tessellation. Here,
   // the None value stand for, respectively, the tessellation shader stages pair and the geometry
   // shader. You’d have used Some(…) if you wanted one of those. More information in the luminance
