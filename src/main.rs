@@ -55,7 +55,7 @@ fn main() {
   // It is required to have a fragment shader to build a shader program.
   let fs = Stage::new(FS_SRC).unwrap();
   // A shader program represents all stages used to transform and rasterize tessellation. Here,
-  // the None value stand for, respectively, the tessellation shader stages pair and the geometry
+  // the None values stand for, respectively, the tessellation shader stages pair and the geometry
   // shader. You’d have used Some(…) if you wanted one of those. More information in the luminance
   // documentation.
   //
