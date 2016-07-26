@@ -121,7 +121,7 @@ fn main() {
     window.swap_buffers();
     // This is a bit brutal. In a good and correct production application, you’d compute the time it
     // took to go through an iteration of the loop and sleep until the required amount of time to
-    // meet the whished FPS. Some people don’t actually sleep and let the while goes crazy and rely
+    // meet the whished FPS. Some people don’t actually sleep and let the while go crazy and rely
     // on the fact your graphic driver will block screen updates if you try to render too quickly.
     // That is because it takes time to the screen to update its pixels.
     //
