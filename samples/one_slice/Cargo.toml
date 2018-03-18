@@ -1,10 +1,8 @@
 [package]
-name = "luminance-samples"
+name = "luminance-samples-one-slice"
 version = "0.1.0"
 authors = ["Dimitri Sabadie <dimitri.sabadie@gmail.com>"]
 
 [dependencies]
-luminance = "0.6.0"
-luminance-gl = "0.5.1"
-gl = "0.5.2"
-glfw = "0.3.0"
+luminance = "0.25"
+luminance-glfw = "0.4"
