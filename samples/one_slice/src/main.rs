@@ -35,7 +35,7 @@ fn main() {
 
     let mut dev: GlfwSurface = GlfwSurface::new(
         WindowDim::Windowed(800, 600),
-        "FAtum-rust test",
+        "Luminance  test",
         WindowOpt::default()
         ).expect("Unable to create GLFW window");
 
