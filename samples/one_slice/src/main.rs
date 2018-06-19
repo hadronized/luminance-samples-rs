@@ -8,10 +8,13 @@ extern crate luminance_glfw;
 use std::thread; // used to sleep
 use std::time::Duration;
 use luminance::framebuffer::Framebuffer;
-use luminance::pipeline::{RenderState, pipeline};
+
 use luminance::shader::program::Program;
 use luminance::tess::{Mode, Tess, TessRender};
-use luminance_glfw::{Action, Device, GLFWDevice, Key, WindowDim, WindowEvent, WindowOpt};
+use luminance::render_state::RenderState;
+use luminance_glfw::surface::*;
+
+ use luminance::context::GraphicsContext;
 
 #[derive(Copy, Clone, Debug)]
 enum Demo {
@@ -29,21 +32,22 @@ impl Demo {
 }
 
 fn main() {
-  let mut dev =
-    GLFWDevice::new(WindowDim::Windowed(800, 600),
-                    "luminance samples",
-                    WindowOpt::default()
-                    ).expect("device creation");
+
+    let mut dev: GlfwSurface = GlfwSurface::new(
+        WindowDim::Windowed(800, 600),
+        "FAtum-rust test",
+        WindowOpt::default()
+        ).expect("Unable to create GLFW window");
 
   let (program, _) = Program::<Vertex, (), ()>::from_strings(None, &VS, None, &FS).expect("program");
-  let direct_triangles = Tess::new(Mode::TriangleFan, &TRI_VERTICES[..], None);
-  let indexed_triangles = Tess::new(Mode::TriangleFan, &TRI_VERTICES[..], &TRI_INDEXES[..]);
+  let direct_triangles = Tess::new(&mut dev, Mode::TriangleFan, &TRI_VERTICES[..], None);
+  let indexed_triangles = Tess::new(&mut dev, Mode::TriangleFan, &TRI_VERTICES[..], &TRI_INDEXES[..]);
 
   let mut demo = Demo::Direct;
   println!("now rendering {:?}", demo);
 
   'app: loop {
-    for event in dev.events() {
+    for event in dev.poll_events() {
       match event {
         WindowEvent::Close | WindowEvent::Key(Key::Escape, _, Action::Release, _) => break 'app,
 
@@ -57,26 +61,25 @@ fn main() {
     }
 
     let size = dev.size();
-
-    dev.draw(|| {
-      pipeline(&Framebuffer::default(size), [0., 0., 0., 0.], |shd_gate| {
+       dev.pipeline_builder().pipeline(
+          &Framebuffer::default(size), [0., 0., 0., 0.], |_pipeline, shd_gate| {
         shd_gate.shade(&program, |rdr_gate, _| {
           rdr_gate.render(RenderState::default(), |tess_gate| {
             match demo {
               Demo::Direct => {
-                tess_gate.render(TessRender::one_slice(&direct_triangles, 3, 3));
-                tess_gate.render(TessRender::one_slice(&direct_triangles, 0, 3));
+                tess_gate.render(&mut dev, TessRender::one_slice(&direct_triangles, 3, 3));
+                tess_gate.render(&mut dev, TessRender::one_slice(&direct_triangles, 0, 3));
               }
 
               Demo::Indexed => {
-                tess_gate.render(TessRender::one_slice(&indexed_triangles, 0, 3));
-                tess_gate.render(TessRender::one_slice(&indexed_triangles, 3, 3));
+                tess_gate.render(&mut dev, TessRender::one_slice(&indexed_triangles, 0, 3));
+                tess_gate.render(&mut dev, TessRender::one_slice(&indexed_triangles, 3, 3));
               }
             }
           });
         });
       });
-    });
+       dev.swap_buffers();
 
     thread::sleep(Duration::from_millis(100));
   }
